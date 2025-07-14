@@ -230,3 +230,10 @@ hr {
 .download-btn:hover {
   background-color: #0b5ed7;
 }
+
+/* Style the PDFDownloadLink component as a button */
+.preview-section .download-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
