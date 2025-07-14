@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InvoicePDF from './components/InvoicePDF';
 import './App.css';
 
 // Helper to format currency
@@ -197,7 +199,13 @@ function App() {
               <p>Thank you for your business!</p>
             </div>
           </div>
-          <button className="download-btn">Download PDF</button>
+          <PDFDownloadLink
+            document={<InvoicePDF invoice={invoice} grandTotal={grandTotal} />}
+            fileName={`invoice-${invoice.invoiceNumber}.pdf`}
+            className="download-btn"
+          >
+            {({ loading }) => (loading ? 'Generating PDF...' : 'Download PDF')}
+          </PDFDownloadLink>
         </section>
       </main>
     </div>
