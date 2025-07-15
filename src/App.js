@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import InvoicePDF from './components/InvoicePDF';
 import './App.css';
@@ -71,6 +71,11 @@ function App() {
     const newItems = invoice.items.filter((item) => item.id !== id);
     setInvoice((prev) => ({ ...prev, items: newItems }));
   };
+
+  // Memoize the PDF document to prevent re-creation on every render
+  const memoizedInvoicePDF = useMemo(() => (
+    <InvoicePDF invoice={invoice} grandTotal={grandTotal} />
+  ), [invoice, grandTotal]);
 
   return (
     <div className="app-container">
@@ -200,7 +205,7 @@ function App() {
             </div>
           </div>
           <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice} grandTotal={grandTotal} />}
+            document={memoizedInvoicePDF}
             fileName={`invoice-${invoice.invoiceNumber}.pdf`}
             className="download-btn"
           >
